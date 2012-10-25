@@ -1,6 +1,14 @@
 (library (clojure helper)
-    (export parse-bindings)
+    (export parse-bindings true false nil gensym)
     (import (rnrs))
+
+(define true #t)
+(define false #f)
+(define nil '())
+
+(define (gensym . prefix)
+  (let ((p (if (null? prefix) 'G (car prefix))))
+    (car (generate-temporaries (list p)))))
 
 ;; internal use
 ;; used by let and loop

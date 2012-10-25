@@ -1,18 +1,22 @@
 (import (clojure syntax) 
 	(only (rnrs) define for-each display newline zero? - * procedure?)
-	(srfi :64)
+	;;(srfi :64)
 	)
-#|
-(defn print #(& args) (for-each display args) (newline))
+
+(def print (fn #(& args) (for-each display args) (newline)))
 (def test-begin print)
 (def test-assert print)
 (def test-equal print)
 (def test-end print)
-|#
 
 (test-begin "Toy clojure test")
 
 (test-assert "fn" (procedure? (fn #(a) a)))
+
+(test-assert "if (true)" (if (zero? 0) true))
+(test-equal  "if (false)" nil (if (zero? 1) true))
+(test-equal  "if (false nil)" nil (if nil true))
+(test-equal  "if (false)" false (if nil true false))
 
 (test-equal "let" 1 (let #(x 1 y x) y))
 

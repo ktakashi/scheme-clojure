@@ -1,11 +1,13 @@
 (library (clojure syntax)
-    (export fn def if loop try quote
+    (export fn def loop try quote
+	    true false nil
 	    (rename (begin do)
 		    (clj:let let)
+		    (clj:if if)
 		    ;; this is actually not a syntax though
 		    (raise-continuable throw)))
     (import (rnrs)
-	    (for (clojure helper) expand))
+	    (for (clojure helper) run expand))
 
 (define-syntax fn
   (lambda (x)
@@ -97,5 +99,17 @@
 				(lambda () cls ...))))
 		 (h)
 		 (apply values r)))))))))
+
+(define-syntax clj:if
+  (lambda (x)
+    (syntax-case x ()
+      ((_ test then)
+       #'(clj:if test then nil))
+      ((_ test then els)
+       ;; nil must be false
+       #'(if (let ((t test))
+	       (and t (not (null? t))))
+	     test
+	     els)))))
 
 )
