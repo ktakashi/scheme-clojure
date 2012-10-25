@@ -109,7 +109,7 @@
        ;; nil must be false
        #'(if (let ((t test))
 	       (and t (not (null? t))))
-	     test
+	     then
 	     els)))))
 
 )

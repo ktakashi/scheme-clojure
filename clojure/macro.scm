@@ -40,6 +40,6 @@
   (#(x & next)
    (let #(dummy (gensym 'and))
      (list 'let (vector dummy x)
-	   (list 'if dummy (cons 'clj:and next) dummy)))))
+	   (list 'if dummy (cons 'and next) dummy)))))
 
 )
